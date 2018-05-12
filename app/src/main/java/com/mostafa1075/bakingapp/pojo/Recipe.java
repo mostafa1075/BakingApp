@@ -1,5 +1,6 @@
 package com.mostafa1075.bakingapp.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcel;
@@ -51,6 +52,8 @@ public class Recipe implements Parcelable {
     protected Recipe(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.name = ((String) in.readValue((String.class.getClassLoader())));
+        this.ingredients = new ArrayList<Ingredient>();
+        this.steps = new ArrayList<Step>();
         in.readList(this.ingredients, (com.mostafa1075.bakingapp.pojo.Ingredient.class.getClassLoader()));
         in.readList(this.steps, (com.mostafa1075.bakingapp.pojo.Step.class.getClassLoader()));
         this.servings = ((Integer) in.readValue((Integer.class.getClassLoader())));
