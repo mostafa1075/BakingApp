@@ -26,7 +26,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
     public RecipesAdapter(Context context, RecipesAdpaterOnClickHandler clickHandler){
         mContext = context;
         mClickHandler = clickHandler;
-        mRecipes = new ArrayList<Recipe>();
+        mRecipes = new ArrayList<>();
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
     public RecipesAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.recipe_list__item, parent, false);
+                .inflate(R.layout.recipe_list_item, parent, false);
         RecipesAdapterViewHolder recipeViewHolder = new RecipesAdapterViewHolder(view);
 
         return recipeViewHolder;

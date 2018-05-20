@@ -9,6 +9,7 @@
         tools:text="Recipe"
         android:gravity="center"
         android:id="@+id/recipe_name_tv"
-        android:paddingVertical="8dp"/>
+        android:paddingVertical="8dp"
+        android:textSize="20sp"/>
 
 </LinearLayout>
