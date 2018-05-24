@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp">
+
+    <ImageView
+        android:layout_width="95dp"
+        android:layout_height="50dp"
+        android:paddingLeft="24dp"
+        android:src="@drawable/ic_recipes"
+        android:paddingStart="24dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:text="Recipe"
-        android:gravity="center"
+        android:paddingStart="8dp"
         android:id="@+id/recipe_name_tv"
-        android:paddingVertical="8dp"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:paddingLeft="8dp" />
 
 </LinearLayout>

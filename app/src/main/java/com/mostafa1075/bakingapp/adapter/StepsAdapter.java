@@ -1,4 +1,4 @@
-package com.mostafa1075.bakingapp;
+package com.mostafa1075.bakingapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mostafa1075.bakingapp.R;
 import com.mostafa1075.bakingapp.pojo.Step;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +40,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsAdapter
 
     @Override
     public void onBindViewHolder(@NonNull StepsAdapterViewHolder holder, int position) {
-        String stepDescription = mSteps.get(position).getDescription();
-        holder.mStepDescription.setText(stepDescription);
+        String stepShortDescription = mSteps.get(position).getShortDescription();
+        holder.mStepDescription.setText(stepShortDescription);
     }
 
     @Override

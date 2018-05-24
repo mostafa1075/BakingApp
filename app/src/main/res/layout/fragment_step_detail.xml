@@ -1,13 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mostafa1075.bakingapp.StepDetailFragment">
+    tools:context="com.mostafa1075.bakingapp.ui.fragment.StepDetailFragment"
+    android:orientation="vertical">
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/step_player"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/step_thumbnail"
+        android:visibility="gone"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/step_description"
+        android:layout_margin="8dp"/>
 
-
-</FrameLayout>
+</LinearLayout>

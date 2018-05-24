@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeDetailActivity" />
-        <activity android:name=".StepDetailActivity"></activity>
+        <activity android:name=".ui.RecipeDetailActivity" />
+        <activity android:name=".ui.StepDetailActivity" />
+
+        <receiver android:name=".IngredientWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ingredient_widget_provider_info" />
+        </receiver>
+        <service android:name=".IngredientsUpdateService"/>
     </application>
 
 </manifest>

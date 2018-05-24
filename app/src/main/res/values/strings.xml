@@ -3,5 +3,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
+    <string name="error_msg">Failed to connect to the internet. Please check your connection and try again.</string>
+
+    <string name="ingredients_label">Ingredients</string>
+    <string name="steps_label">Steps</string>
+    <string name="widget_button_text">Add to widget</string>
 </resources>

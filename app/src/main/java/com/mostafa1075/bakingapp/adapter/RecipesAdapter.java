@@ -1,4 +1,4 @@
-package com.mostafa1075.bakingapp;
+package com.mostafa1075.bakingapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mostafa1075.bakingapp.R;
 import com.mostafa1075.bakingapp.pojo.Recipe;
 
 import java.util.ArrayList;
