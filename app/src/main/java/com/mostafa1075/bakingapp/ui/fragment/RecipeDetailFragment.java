@@ -1,5 +1,6 @@
 package com.mostafa1075.bakingapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,7 +19,6 @@ import com.mostafa1075.bakingapp.R;
 import com.mostafa1075.bakingapp.adapter.StepsAdapter;
 import com.mostafa1075.bakingapp.pojo.Ingredient;
 import com.mostafa1075.bakingapp.pojo.Recipe;
-import com.mostafa1075.bakingapp.ui.MainActivity;
 
 import java.util.List;
 
@@ -27,6 +27,8 @@ import java.util.List;
  */
 
 public class RecipeDetailFragment extends Fragment {
+
+    public static final String RECIPE_ARGUMENT  = "recipe_arg";
 
     private Recipe mRecipe;
     private StepsAdapter.onStepClickListener mCallback;
@@ -44,7 +46,52 @@ public class RecipeDetailFragment extends Fragment {
         if(bundle == null)
             throw new UnsupportedOperationException("A bundle must be passed containing the recipe");
 
-        mRecipe = bundle.getParcelable(MainActivity.RECIPE_KEY);
+        mRecipe = bundle.getParcelable(RECIPE_ARGUMENT);
+
+        final String ingredientsString = buildIngredientsString();
+        TextView ingredientsTV = rootView.findViewById(R.id.ingredients);
+        ingredientsTV.setText(ingredientsString);
+
+        RecyclerView recyclerView =  rootView.findViewById(R.id.steps_recyclerview);
+        recyclerView.setHasFixedSize(true);
+        // DividerItemDecoration adapted from: https://stackoverflow.com/a/24872169
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
+        StepsAdapter adapter = new StepsAdapter(getContext(),
+                mRecipe.getSteps(),
+                mCallback);
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setFocusable(false); // https://stackoverflow.com/a/21235114
+
+        Button addWidgetBtn = rootView.findViewById(R.id.add_widget_btn);
+        addWidgetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IngredientsUpdateService
+                        .startActionUpdateIngredients(getContext(), ingredientsString);
+            }
+        });
+
+        return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (StepsAdapter.onStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement onStepClickListener");
+        }
+    }
+
+    // Build the ingredients string from the ingredients List
+    private String buildIngredientsString(){
 
         List<Ingredient> ingredients = mRecipe.getIngredients();
 
@@ -58,45 +105,6 @@ public class RecipeDetailFragment extends Fragment {
             ingredientsStringBuilder.append("\n");
         }
 
-        TextView ingredientsTV = rootView.findViewById(R.id.ingredients);
-        ingredientsTV.setText(ingredientsStringBuilder.toString());
-
-        RecyclerView recyclerView =  rootView.findViewById(R.id.steps_recyclerview);
-        recyclerView.setHasFixedSize(true);
-        // DividerItemDecoration adapted from: https://stackoverflow.com/a/24872169
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
-        StepsAdapter adapter = new StepsAdapter(getContext(),
-                mRecipe.getSteps(),
-                (StepsAdapter.onStepClickListener) getContext());
-        recyclerView.setAdapter(adapter);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setFocusable(false); // https://stackoverflow.com/a/21235114
-
-        Button addWidgetBtn = rootView.findViewById(R.id.add_widget_btn);
-        addWidgetBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IngredientsUpdateService.startActionUpdateIngredients(getContext(), ingredientsStringBuilder.toString());
-            }
-        });
-
-
-        return rootView;
+        return ingredientsStringBuilder.toString();
     }
-
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//
-//        try {
-//            mCallback = (StepsAdapter.onStepClickListener) context;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(context.toString()
-//                    + " must implement onStepClickListener");
-//        }
-//    }
 }

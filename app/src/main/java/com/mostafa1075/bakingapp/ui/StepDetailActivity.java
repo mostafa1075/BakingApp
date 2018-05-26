@@ -46,9 +46,9 @@ public class StepDetailActivity extends AppCompatActivity {
 
         updateStepFragment();
 
-
     }
 
+    // Update the step fragment after incrementing or decrementing the step ID
     private void updateStepFragment() {
 
         setTitle("Step " + mSteps.get(mCurrStepId).getId());
@@ -65,6 +65,7 @@ public class StepDetailActivity extends AppCompatActivity {
                 .commit();
     }
 
+    // Increment the step ID and show the next step
     public void onNextPressed(View view) {
         if (mCurrStepId == 0)
             mPrevBtn.setVisibility(View.VISIBLE);
@@ -76,6 +77,7 @@ public class StepDetailActivity extends AppCompatActivity {
         updateStepFragment();
     }
 
+    // Decrement the step ID and show the previous step
     public void onPrevPressed(View view) {
         if (mCurrStepId == mSteps.size() - 1)
             mNextBtn.setVisibility(View.VISIBLE);
@@ -87,6 +89,7 @@ public class StepDetailActivity extends AppCompatActivity {
         updateStepFragment();
     }
 
+    // Save current step ID
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(STEPS_KEY, mCurrStepId);

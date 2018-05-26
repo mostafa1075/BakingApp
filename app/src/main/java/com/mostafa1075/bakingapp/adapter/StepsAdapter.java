@@ -19,9 +19,9 @@ import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsAdapterViewHolder> {
 
-    List<Step> mSteps;
-    Context mContext;
-    onStepClickListener mCallback;
+    private final List<Step> mSteps;
+    private final Context mContext;
+    private final onStepClickListener mCallback;
 
     public StepsAdapter(Context context, List<Step> steps, onStepClickListener callback) {
         mContext = context;
@@ -50,23 +50,23 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsAdapter
     }
 
     public interface onStepClickListener {
-        void onStepSelected(int position);
+        void onStepClicked(int position);
     }
 
     public class StepsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mStepDescription;
+        private final TextView mStepDescription;
 
         public StepsAdapterViewHolder(View itemView) {
             super(itemView);
-            mStepDescription = (TextView) itemView.findViewById(R.id.step_description_tv);
+            mStepDescription = itemView.findViewById(R.id.step_description_tv);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            mCallback.onStepSelected(position);
+            mCallback.onStepClicked(position);
         }
     }
 }

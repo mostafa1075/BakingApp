@@ -20,11 +20,11 @@ import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesAdapterViewHolder> {
 
-    List<Recipe> mRecipes;
-    Context mContext;
-    RecipesAdpaterOnClickHandler mClickHandler;
+    private List<Recipe> mRecipes;
+    private final Context mContext;
+    private final RecipesAdapaterOnClickHandler mClickHandler;
 
-    public RecipesAdapter(Context context, RecipesAdpaterOnClickHandler clickHandler){
+    public RecipesAdapter(Context context, RecipesAdapaterOnClickHandler clickHandler){
         mContext = context;
         mClickHandler = clickHandler;
         mRecipes = new ArrayList<>();
@@ -36,9 +36,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
 
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.recipe_list_item, parent, false);
-        RecipesAdapterViewHolder recipeViewHolder = new RecipesAdapterViewHolder(view);
 
-        return recipeViewHolder;
+        return new RecipesAdapterViewHolder(view);
     }
 
     @Override
@@ -57,15 +56,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
         notifyDataSetChanged();
     }
 
-    public interface RecipesAdpaterOnClickHandler{void onRecipeClick(Recipe recipe);}
+    public interface RecipesAdapaterOnClickHandler {void onRecipeClick(Recipe recipe);}
 
     public class RecipesAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView mRecipeName;
+        private final TextView mRecipeName;
 
-        public RecipesAdapterViewHolder(View itemView) {
+        private RecipesAdapterViewHolder(View itemView) {
             super(itemView);
-            mRecipeName = (TextView) itemView.findViewById(R.id.recipe_name_tv);
+            mRecipeName = itemView.findViewById(R.id.recipe_name_tv);
             itemView.setOnClickListener(this);
         }
 

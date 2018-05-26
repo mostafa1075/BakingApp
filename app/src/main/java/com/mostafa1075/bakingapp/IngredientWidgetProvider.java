@@ -23,7 +23,6 @@ public class IngredientWidgetProvider extends AppWidgetProvider {
 
     static void updateIngredientsWidgets(Context context, AppWidgetManager appWidgetManager,
                                 int[] appWidgetIds, String ingredientsText) {
-
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId, ingredientsText);
         }

@@ -16,7 +16,10 @@ import java.util.ArrayList;
 
 public class RecipeDetailActivity extends AppCompatActivity implements StepsAdapter.onStepClickListener {
 
+    public static final String RECIPE_KEY = "recipe";
+
     private Recipe mRecipe;
+    // Used to differentiate between phone and tablet layouts
     private boolean mTwoPane;
 
     @Override
@@ -24,29 +27,28 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-
         mTwoPane = findViewById(R.id.recipe_detail_layout) != null;
 
-        mRecipe = getIntent().getParcelableExtra(MainActivity.RECIPE_KEY);
+        mRecipe = getIntent().getParcelableExtra(RECIPE_KEY);
 
         setTitle(mRecipe.getName());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         RecipeDetailFragment detailFragment = new RecipeDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(MainActivity.RECIPE_KEY, mRecipe);
+        bundle.putParcelable(RecipeDetailFragment.RECIPE_ARGUMENT, mRecipe);
 
         detailFragment.setArguments(bundle);
 
         fragmentManager.beginTransaction()
                 .replace(R.id.recipe_detail_fragment, detailFragment)
                 .commit();
-
     }
 
+    // Show the step details based on the layout used
     @Override
-    public void onStepSelected(int position) {
+    public void onStepClicked(int position) {
+        // For tablet layout replace the step fragment with the clicked step
         if (mTwoPane) {
             StepDetailFragment stepDetailFragment = new StepDetailFragment();
             Bundle bundle = new Bundle();
@@ -57,7 +59,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
             fragmentManager.beginTransaction()
                     .replace(R.id.step_detail_fragment, stepDetailFragment)
                     .commit();
-        } else {
+        }
+        // For the phone layout launch StepDetailActivity to show the step details
+        else {
             Intent intent = new Intent(this, StepDetailActivity.class);
             intent.putParcelableArrayListExtra(StepDetailActivity.STEPS_KEY, (ArrayList<Step>) mRecipe.getSteps());
             intent.putExtra(StepDetailActivity.STEP_ID_KEY, position);

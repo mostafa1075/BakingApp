@@ -1,6 +1,9 @@
 package com.mostafa1075.bakingapp.ui;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -22,25 +25,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdpaterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapaterOnClickHandler {
 
-    //DONE: Create Tablet layout
-    //DONE: Add next and previous in recipe details
-    //KINDA: Polish layout and ui elements
-    //TODO: Fix Exoplayer lag
-    //DONE: Add a button for ingredients widget
-    //NEARLY DONE: Handle unexpected JSON Data
-    //TODO: Comment new code
-    //TODO: Add Espresso testing
-
-    public static final String RECIPE_KEY = "recipe";
+    // Used to calculate span count to fit bigger layouts
     private static final int RECYCLERVIEW_ITEM_MIN_WIDTH = 500;
 
     private RecyclerView mRecyclerView;
     private RecipesAdapter mRecipesAdapter;
     private GridLayoutManager mLayoutManager;
-
     private Call<List<Recipe>> mRecipeResponse;
+    // Used for halting the test until the Recipes is loaded using Retrofit
+    @Nullable
+    private CountingIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,24 +52,32 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         mRecipesAdapter = new RecipesAdapter(this, this);
         mRecyclerView.setAdapter(mRecipesAdapter);
 
-
         mLayoutManager = new GridLayoutManager(this, getSpanCount());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         loadData();
     }
 
-    private void loadData(){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mRecipeResponse != null)
+            mRecipeResponse.cancel();
+    }
+
+    private void loadData() {
+        getIdlingResource().increment();
         mRecipeResponse = RetrofitClient.getInstance().getRecipes();
         mRecipeResponse.enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 mRecipesAdapter.swapRecipes(response.body());
+                getIdlingResource().decrement();
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d("FAILLLLLLLLLLLLLLL", "onFailure: " + t.getMessage());
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
+                Log.d(this.getClass().getSimpleName(), "onFailure: " + t.getMessage());
                 showErrorMessage();
             }
         });
@@ -82,11 +86,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
     @Override
     public void onRecipeClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra(RECIPE_KEY, recipe);
+        intent.putExtra(RecipeDetailActivity.RECIPE_KEY, recipe);
         startActivity(intent);
     }
 
-    void showErrorMessage(){
+    private void showErrorMessage() {
         findViewById(R.id.error_message).setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
@@ -102,5 +106,11 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
         display.getMetrics(outMetrics);
 
         return Math.round(outMetrics.widthPixels / RECYCLERVIEW_ITEM_MIN_WIDTH);
+    }
+
+    public CountingIdlingResource getIdlingResource() {
+        if (mIdlingResource == null)
+            mIdlingResource = new CountingIdlingResource(this.getClass().getName());
+        return mIdlingResource;
     }
 }

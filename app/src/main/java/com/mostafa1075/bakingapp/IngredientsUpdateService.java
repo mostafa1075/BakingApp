@@ -26,7 +26,8 @@ public class IngredientsUpdateService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
-        if(intent.getAction() == ACTION_UPDATE_INGREDIENTS){
+        assert intent != null;
+        if(intent.getAction().equals(ACTION_UPDATE_INGREDIENTS)){
             String ingredients = intent.getStringExtra(EXTRA_INGREDIENTS_KEY);
             handleActionUpdateIngredients(ingredients);
         }
