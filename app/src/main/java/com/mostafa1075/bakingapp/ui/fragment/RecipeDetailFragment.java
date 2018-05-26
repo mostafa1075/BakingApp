@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.mostafa1075.bakingapp.IngredientsUpdateService;
+import com.mostafa1075.bakingapp.widget.IngredientsUpdateService;
 import com.mostafa1075.bakingapp.R;
 import com.mostafa1075.bakingapp.adapter.StepsAdapter;
 import com.mostafa1075.bakingapp.pojo.Ingredient;

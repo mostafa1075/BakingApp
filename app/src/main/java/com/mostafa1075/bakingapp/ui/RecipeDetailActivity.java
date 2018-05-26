@@ -18,7 +18,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
 
     public static final String RECIPE_KEY = "recipe";
 
-    private Recipe mRecipe;
+    public Recipe mRecipe;
     // Used to differentiate between phone and tablet layouts
     private boolean mTwoPane;
 
@@ -48,6 +48,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
     // Show the step details based on the layout used
     @Override
     public void onStepClicked(int position) {
+
+        StepDetailFragment.deleteSavedPlaybackState(this);
+
         // For tablet layout replace the step fragment with the clicked step
         if (mTwoPane) {
             StepDetailFragment stepDetailFragment = new StepDetailFragment();

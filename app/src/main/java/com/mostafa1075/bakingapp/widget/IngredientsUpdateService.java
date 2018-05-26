@@ -1,4 +1,4 @@
-package com.mostafa1075.bakingapp;
+package com.mostafa1075.bakingapp.widget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;

@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mostafa1075.bakingapp.R;
@@ -40,8 +42,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsAdapter
 
     @Override
     public void onBindViewHolder(@NonNull StepsAdapterViewHolder holder, int position) {
-        String stepShortDescription = mSteps.get(position).getShortDescription();
+        Step step = mSteps.get(position);
+        String stepShortDescription = step.getShortDescription();
         holder.mStepDescription.setText(stepShortDescription);
+        String thumbnailType = MimeTypeMap.getFileExtensionFromUrl(step.getThumbnailURL()); //https://stackoverflow.com/a/39288146
+        if(step.getVideoURL().equals("") && !thumbnailType.equals("mp4"))
+            holder.mVideoIcon.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -56,10 +62,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsAdapter
     public class StepsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView mStepDescription;
-
+        private final ImageView mVideoIcon;
         public StepsAdapterViewHolder(View itemView) {
             super(itemView);
             mStepDescription = itemView.findViewById(R.id.step_description_tv);
+            mVideoIcon = itemView.findViewById(R.id.video_icon);
             itemView.setOnClickListener(this);
         }
 

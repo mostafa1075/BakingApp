@@ -28,7 +28,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.RecipesAdapaterOnClickHandler {
 
     // Used to calculate span count to fit bigger layouts
-    private static final int RECYCLERVIEW_ITEM_MIN_WIDTH = 500;
+    private static final int RECYCLERVIEW_ITEM_MIN_WIDTH = 600;
 
     private RecyclerView mRecyclerView;
     private RecipesAdapter mRecipesAdapter;

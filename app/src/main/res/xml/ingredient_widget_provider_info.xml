@@ -2,8 +2,8 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/ingredient_widget_provider"
     android:initialLayout="@layout/ingredient_widget_provider"
-    android:minHeight="150dp"
-    android:minWidth="200dp"
+    android:minHeight="100dp"
+    android:minWidth="150dp"
     android:previewImage="@drawable/ic_launcher_foreground"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"/>

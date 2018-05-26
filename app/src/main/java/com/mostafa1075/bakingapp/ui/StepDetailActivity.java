@@ -32,10 +32,11 @@ public class StepDetailActivity extends AppCompatActivity {
 
         mSteps = getIntent().getParcelableArrayListExtra(STEPS_KEY);
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             mCurrStepId = getIntent().getIntExtra(STEP_ID_KEY, 0);
-        else
+        } else {
             mCurrStepId = savedInstanceState.getInt(STEPS_KEY);
+        }
 
         setTitle("Step " + mSteps.get(mCurrStepId).getId());
 
@@ -56,7 +57,6 @@ public class StepDetailActivity extends AppCompatActivity {
         StepDetailFragment stepDetailFragment = new StepDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(StepDetailFragment.STEP_ARGUMENT, mSteps.get(mCurrStepId));
-
         stepDetailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -67,6 +67,10 @@ public class StepDetailActivity extends AppCompatActivity {
 
     // Increment the step ID and show the next step
     public void onNextPressed(View view) {
+
+        //Delete current fragment playback state
+        StepDetailFragment.deleteSavedPlaybackState(this);
+
         if (mCurrStepId == 0)
             mPrevBtn.setVisibility(View.VISIBLE);
 
@@ -79,6 +83,10 @@ public class StepDetailActivity extends AppCompatActivity {
 
     // Decrement the step ID and show the previous step
     public void onPrevPressed(View view) {
+
+        //Delete current fragment playback state
+        StepDetailFragment.deleteSavedPlaybackState(this);
+
         if (mCurrStepId == mSteps.size() - 1)
             mNextBtn.setVisibility(View.VISIBLE);
 

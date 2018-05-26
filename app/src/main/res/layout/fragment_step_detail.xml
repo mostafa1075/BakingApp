@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.mostafa1075.bakingapp.ui.fragment.StepDetailFragment"
     android:orientation="vertical">
 
@@ -9,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/step_player"
-        android:background="#000"/>
+        android:background="#000"
+        app:fastforward_increment="3000"
+        app:rewind_increment="3000"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="250dp"

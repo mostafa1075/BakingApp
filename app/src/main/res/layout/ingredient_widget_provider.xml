@@ -4,8 +4,14 @@
     android:padding="@dimen/widget_margin"
     android:background="@color/colorPrimaryLight">
 
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredients_listview"/>
+
     <TextView
-        android:id="@+id/ingredients_text"
+        android:id="@+id/ingredients_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

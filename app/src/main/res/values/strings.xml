@@ -8,4 +8,5 @@
     <string name="ingredients_label">Ingredients</string>
     <string name="steps_label">Steps</string>
     <string name="widget_button_text">Add to widget</string>
+    <string name="step_placeholder">Recipe Introduction</string>
 </resources>
